@@ -9,6 +9,7 @@
 #  updated_at      :datetime
 #  password_digest :string(255)
 #  remember_token  :string(255)
+#  admin           :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base
@@ -22,6 +23,7 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }
   has_secure_password
   has_many :microposts, dependent: :destroy
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
 
   def User.new_remember_token
     SecureRandom.urlsafe_base64
